@@ -1,0 +1,133 @@
+//415. Add Strings 
+
+public String addStrings(String num1 , String num2){
+//corner cases
+if(num1 == null || num1.length == 0){
+return num1 ;
+}
+
+if(num2 == null || num2.length == 0){
+return num2 ;
+}
+
+//main logic
+int index1 = num1.length - 1 ;
+int index2 = num2.length - 1 ;
+int carry = 0 ;
+StringBuilder res = new StringBuilder() ; 
+
+while( index1 >= 0 || index2 >= 0){
+int n1 = (index1 < 0)?0 : num1.charAt(index1) - '0' ;
+int n2 = (index2 < 0)?0 : num2.charAt(index2) - '0' ;
+res.append((n1 + n2 + carry) % 10) ;
+carry = (n1 + n2 + carry) / 10 ;
+index1 -- ;
+index2 -- ;
+}
+
+if(carry == 1){
+res.append('1') ; 
+}
+
+return res.reverse().toString() ; 
+}
+
+
+
+
+
+//203 Remove Linked List Elements
+//Definition for singly-linked list
+public class ListNode{
+    int val ; 
+    ListNode next ; 
+    ListNode(int x){
+    val = x ;
+    }
+}
+public ListNode removeElements(ListNode head, int val){
+//corner case
+if(head == null){
+return head ;
+}
+
+//main logic
+ListNode dummy = new ListNode(-1) ;
+dummy.next = head ;
+ListNode cur = dummy ;
+
+while(cur.next != null){
+if(cur.next.val == val){
+cur.next = cur.next.next ;
+}
+else{
+cur = cur.next ;
+}
+}
+return head ;
+}
+}
+//一定要同时满足cur 和 cur.next !=null 么？
+
+
+//141.Linked List Cycle
+//Definition for singly-linked list.
+public class ListNode{
+   int val ; 
+   ListNode next ; 
+   ListNode(int x){
+   val = x ;
+   }
+}
+
+public boolean hasCycle(ListNode head){
+//corner case
+if(head == null || head.next == null){
+return false ;
+}
+
+//main logic
+ListNode slow = head ;
+ListNode fast = head ;
+
+while(slow != null && fast != null){
+slow = slow.next ;
+fast = fast.next.next ;
+if(slow == fast){
+return true ;
+}
+}
+
+return false ;
+}
+//先判断快慢指针是否相等还是先移动快慢指针？与快慢指针初始定义是否相关？
+
+
+
+
+
+
+
+//27.Remove Element
+public int removeElement(int[] nums , int val){
+//corner case
+if(nums == null || nums.length == 0){
+return 0 ;
+}
+
+//main logic
+int index = 0 ;
+int temp ;
+
+while(nums[i] != null){
+if(nums[i] == val){
+temp = nums[i] ;
+nums[i] = nums[i+1] ;
+nums[i+1] = temp ;
+index ++ ;
+i ++ ;
+}
+}
+
+return index ;
+}
