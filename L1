@@ -117,17 +117,71 @@ return 0 ;
 
 //main logic
 int index = 0 ;
-int temp ;
 
-while(nums[i] != null){
-if(nums[i] == val){
-temp = nums[i] ;
-nums[i] = nums[i+1] ;
-nums[i+1] = temp ;
+for(int i = 0 ; i < nums.length ; i ++){
+
+if(nums[i] != val){
+nums[index] = nums[i] ;
 index ++ ;
-i ++ ;
 }
 }
 
 return index ;
+}
+
+
+
+
+
+//283.Move Zeroes
+
+public void moveZeroes(int[] nums){
+//corner case
+if(nums == null || nums.length == 0){
+return ;
+}
+
+//main logic
+int index = 0 ;
+
+for(int i = 0 ; i < nums.length ; i++){
+if(nums[i] != 0){
+swap(int[]nums , i , index) ;
+index ++ ;
+}
+}
+return ;
+}
+
+public void swap(int[]nums , int i ,int j){
+int temp = nums[i] ;
+nums[i] = nums[j] ; 
+nums[j] = temp ;
+}
+
+
+
+
+
+//242.Valid Anagram
+public boolean isAnagram(String s , String t){
+//corner case
+if(s == null || t == null){
+return false ; 
+}
+
+if(s.equals(t)){
+return true ;
+}
+
+if(s.length != t.length){
+return false ;
+}
+
+//main logic
+Map<Character , Integer> map = new HashMap<>() ; 
+for(int i = 0 ; i < s.length ; i++){
+map.put(s[i],1) ;   //s[i]和s.charAt(i)???? 
+}
+
 }
