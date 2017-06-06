@@ -1,0 +1,86 @@
+//49.Group Anagrams
+public List<List<String>> groupAnagrams(String[] strs) {
+
+List<List<String>> result = new ArrayList<List<String>>();
+
+//corner case
+if(strs == null || strs.length == 0){
+return result ;
+}
+
+//main logic
+    HashMap<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
+    for(String str: strs){
+        char[] arr = new char[26];
+        for(int i=0; i<str.length(); i++){
+            arr[str.charAt(i)-'a']++;
+        }
+        String ns = new String(arr);
+ 
+        if(map.containsKey(ns)){
+            map.get(ns).add(str);
+        }else{
+            ArrayList<String> al = new ArrayList<String>();
+            al.add(str);
+            map.put(ns, al);
+        }
+    }
+ 
+    result.addAll(map.values());
+ 
+    return result;
+}
+
+
+
+
+
+
+//344.Reverse String
+public String ReverseString(String s){
+//corner case
+if(s == null || s.length == 0){
+return s ;
+}
+
+//main logic
+String res = new String() ;
+for(int i = s.length-1 ; i >=0 ; i--){
+res = res + s[i] ; 
+}
+return res ;
+}
+
+
+
+
+
+
+//19 Remove Nth Node From End of List
+public ListNode(ListNode head , int n){
+//corner case
+if(head == null){
+return head ;
+}
+
+//main logic
+ListNode dummy = new ListNode(-1) ;
+dummy.next = head ;
+
+ListNode fast = dummy ;
+ListNode slow = dummy ;
+int N = n+1 ;
+
+while(N >= 0){
+fast = fast.next ;
+N-- ;
+}
+
+while(fast != null){
+slow = slow.next ;
+}
+slow = slow.next ;
+
+slow.next = slow.next.next ;
+return head ;
+}
