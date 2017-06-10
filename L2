@@ -1,0 +1,212 @@
+//75Sort Colors
+//~1
+public class Solution {
+    public void sortColors(int[] nums) {
+        //corner case 
+        if(nums == null || nums.length == 0){
+            return ;
+        }
+        
+        //business logic
+        int pre = 0;                           //pre之前均是0
+        int end = nums.length - 1;             //end之后均是2
+        
+        for(int i = 0;i <= end;i ++){
+            if(nums[i] == 0){
+                swap(nums , i ,pre);
+                pre++;
+            }
+            
+            if(nums[i] == 2){
+                swap(nums , i ,end);
+                end--;
+                i--;
+            }
+            }
+        
+        return ;
+    }
+    
+    public void swap(int[]nums ,int i ,int j){
+        int temp = nums[i];
+        nums[i] = nums[j] ;
+        nums[j] = temp ;
+    }
+}
+
+~2计数器方法
+public class Solution {
+    public void sortColors(int[] nums) {
+        //corner case 
+        if(nums == null || nums.length == 0){
+            return ;
+        }
+        
+        //business logic
+        int[] count = new int[3];
+        for(int i = 0;i < nums.length;i ++){
+            if(nums[i] == 0){
+                count[0] ++;
+            }
+            if(nums[i] == 1){
+                count[1] ++;
+            }
+            if(nums[i] == 2){
+                count[2] ++;
+            }
+            }
+        
+        for(int i = 0;i < count[0];i ++){
+            nums[i] = 0;
+        }
+        for(int i = count[0];i < count[0] + count[1];i ++){
+            nums[i] = 1;
+        }
+        for(int i = count[0] + count[1];i < nums.length;i ++){
+            nums[i] = 2;
+        }
+    }
+}
+    
+    
+//438Find All Anagrams in a String
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        //corner case
+        List<Integer> res = new ArrayList<>();
+        if(s == null || s.length() == 0 || p == null || p.length() == 0){
+            return res;
+        }
+        
+        //business logic
+        int[] map = new int[256];
+        //统计词频
+        for(int i = 0;i < p.length();i ++){
+            map[p.charAt(i)] ++;
+        }
+        
+        int left = 0;
+        int right = 0;
+        int counter = p.length();
+        
+        while(right < s.length()){
+            if(map[s.charAt(right)] > 0){
+                counter --;
+            }
+            
+            map[s.charAt(right)] --;
+            right ++;
+            
+            if(counter == 0){
+                res.add(left);
+            }
+            
+            if(right - left == p.length()){
+                if(map[s.charAt(left)] >= 0){
+                   counter ++; 
+                }
+                
+                map[s.charAt(left)] ++;
+                left ++;
+                }
+        }
+        
+        return res;
+        
+    }
+}
+
+
+
+
+
+
+//189.Rotate Array
+public class Solution {
+    public List<Integer> findAnagrams(String s, String p) {
+        //corner case
+        List<Integer> res = new ArrayList<>();
+        if(s == null || s.length() == 0 || p == null || p.length() == 0){
+            return res;
+        }
+        
+        //business logic
+        int[] map = new int[256];
+        //统计词频
+        for(int i = 0;i < p.length();i ++){
+            map[p.charAt(i)] ++;
+        }
+        
+        int left = 0;
+        int right = 0;
+        int counter = p.length();
+        
+        while(right < s.length()){
+            if(map[s.charAt(right)] > 0){
+                counter --;
+            }
+            
+            map[s.charAt(right)] --;
+            right ++;
+            
+            if(counter == 0){
+                res.add(left);
+            }
+            
+            if(right - left == p.length()){
+                if(map[s.charAt(left)] >= 0){
+                   counter ++; 
+                }
+                
+                map[s.charAt(left)] ++;
+                left ++;
+                }
+        }
+        
+        return res;
+        
+    }
+}
+
+
+
+
+
+
+
+//48.Rotate Image
+public class Solution {
+    public void rotate(int[][] matrix) {
+        //corner case
+        if(matrix == null || matrix.length == 0 || matrix[0].length == 0){
+            return;
+        }
+        
+        //business logic
+        int row = matrix.length;
+        int col = matrix[0].length;
+        for(int i = 0;i < row;i ++){
+            for(int j = 0;j < i;j ++){
+                swap(matrix , i , j , j , i );
+            }
+        }
+        
+        for(int i = 0;i < row;i ++){
+            for(int j = 0;j < col/2;j ++){
+                swap(matrix , i , j , i , col - j - 1 );
+            }
+        }
+    }
+    
+    
+    public void swap(int[][] matrix , int i , int j , int x , int y){
+        int temp = matrix[i][j];
+        matrix[i][j] = matrix[x][y];
+        matrix[x][y] = temp;
+    }
+}
+
+
+
+
+155.Min Stack
