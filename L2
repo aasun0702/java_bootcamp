@@ -210,3 +210,69 @@ public class Solution {
 
 
 155.Min Stack
+class MinStack {
+    Deque<Integer> pro;
+    Deque<Integer> min;
+    
+    public MinStack(){
+        pro = new ArrayDeque<>();
+        min = new ArrayDeque<>();
+    }
+    
+    public void push(int x) {
+        pro.addLast(x);
+        
+        if(min.isEmpty() || x <= min.peekLast()){          
+            min.addLast(x);
+        }
+        else{
+            min.addLast(min.peekLast());
+        }
+    }
+
+    public void pop() {
+        min.removeLast();                //ArrayDeque :pop相当于removeFirst ; push相当于addFirst
+        pro.removeLast();
+    }
+
+    public int top() {
+        return pro.peekLast();
+    }
+
+    public int getMin() {
+        return min.peekLast();
+    }
+}
+
+
+
+
+
+
+
+//11.Container With Most Water
+public class Solution {
+    public int maxArea(int[] height) {
+        //corner case
+        if(height == null || height.length == 0){
+            return 0;
+        }
+        
+        //business logic
+        int left = 0;
+        int right = height.length - 1;
+        int max = 0;
+        while(left < right){
+            if(height[left] < height[right]){
+                max = Math.max(max , height[left] * (right - left));
+                left ++;
+            }
+            else{
+                max = Math.max(max , height[right] * (right - left));
+                right --;
+            }
+        }
+
+        return max;
+    }
+}
