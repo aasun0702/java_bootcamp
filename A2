@@ -1,0 +1,286 @@
+//21.Merge Two Sorted Lists
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+public class Solution {
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        //corner case
+        if(l1 == null ){
+            return l2;
+        }
+        if(l2 == null){
+            return l1;
+        }
+        
+        //business logic
+        ListNode dummy = new ListNode(-1);
+        ListNode res = dummy;
+        
+        while(l1 != null && l2 != null){
+            if(l1.val <= l2.val){
+                res.next = l1;
+                l1 = l1.next;
+            }
+            else{
+                res.next = l2;
+                l2 = l2.next;
+            }
+            res = res.next;
+        }
+        
+        if(l1 != null){
+            res.next = l1;
+        }
+        
+        if(l2 != null){
+            res.next = l2;
+        }
+        
+        return dummy.next;
+    }
+}
+
+
+
+
+88.Merge Sorted Array
+~1 use extra space
+public class MergeTwoArray {
+	    public static int[] merge(int[] nums1, int m, int[] nums2, int n) {
+	        //corner case
+	        if(nums1 == null || nums1.length == 0 ){
+	            return nums2;
+	        }
+	        if(nums2 == null || nums2.length ==0){
+	        	return nums1;
+	        }
+	        
+	        //business logic
+	        int[] nums3 = new int[m + n];
+	        int i = 0;
+	        int j = 0;
+	        int p = 0;
+	        
+	        while(i < m && j < n){
+	            if(nums1[i] < nums2[j]){
+	                nums3[p] = nums1[i];
+	                p ++;
+	                i ++;
+	            }
+	            else{
+	                nums3[p] = nums2[j];
+	                p ++;
+	                j ++;
+	            }
+	        }
+	        
+	        if(i < m){
+	            for(int t = p;t < m + n;t ++){
+	                nums3[t] = nums1[i];
+	                t ++;
+	                i ++;
+	            }
+	        }
+	            
+	        if(j < n){
+	            for(int t = p;t < m + n;t ++){
+	                nums3[t] = nums2[j];
+	                t ++;
+	                j ++;
+	            }
+	        }
+	        
+	        nums1 = nums3;
+	        return nums1;
+	    }
+	    
+	    public static void main(String[] argv){
+	    	int[] nums1 = {1,1,6,17};
+	    	int[] nums2 = {2,4,5,9,20};
+	    	int[] nums = merge(nums1, 4, nums2, 5);
+	    	System.out.println(Arrays.toString(nums));
+	    }
+}
+
+
+~2 no extra space
+public class Solution {
+    public void merge(int[] nums1, int m, int[] nums2, int n) {
+        //corner case
+        if(nums1 == null || nums1.length == 0 || nums2 == null || nums2.length ==0){
+            return;
+        }
+        
+        //business logic
+        int i = m - 1;
+        int j = n - 1;
+        int p = m + n - 1;
+        
+        while(i >= 0 && j >= 0){
+            if(nums1[i] > nums2[j]){
+                nums1[p] = nums1[i];
+                i--;
+            }
+            else{
+                nums1[p] = nums2[j];
+                j--;
+            }
+            p--;
+        }
+        
+        if(i >= 0){
+            for(int t = p;p >= 0;p--){
+                nums1[p] = nums1[i--];
+            }
+        }
+        
+        if(j >= 0){
+            for(int t = p;p >= 0;p--){
+                nums1[p] = nums2[j--];
+            }
+        }
+        return;
+    }
+}
+
+
+
+
+
+
+
+//225.Implement Stack using Queues
+public class MyStack {
+    Deque<Integer> Queue1;
+    Deque<Integer> Queue2;
+    
+    /** Initialize your data structure here. */
+    public MyStack() {
+        Queue1 = new ArrayDeque<>();
+        Queue2 = new ArrayDeque<>();
+        
+    }
+    
+    /** Push element x onto stack. */
+    public void push(int x) {
+        if(Queue1.isEmpty())
+        {
+            Queue1.addLast(x);
+            while(!Queue2.isEmpty()){
+                Queue1.addLast(Queue2.poll());
+            }
+        }
+        
+        else{
+            Queue2.addLast(x);
+            while(!Queue1.isEmpty()){
+                Queue2.addLast(Queue1.poll());
+            }
+        }
+        
+    }
+    
+    /** Removes the element on top of the stack and returns that element. */
+    public int pop() {
+        if(!Queue1.isEmpty()){
+            return Queue1.poll();
+        }
+        
+        else{
+            return Queue2.poll();
+        }
+    }
+    
+    /** Get the top element. */
+    public int top() {
+        if(!Queue1.isEmpty()){
+            return Queue1.peekFirst();
+        }
+        
+        else{
+            return Queue2.peekFirst();
+        }
+    }
+    
+    /** Returns whether the stack is empty. */
+    public boolean empty() {
+        return Queue1.isEmpty() && Queue2.isEmpty();
+    }
+}
+
+/**
+ * Your MyStack object will be instantiated and called as such:
+ * MyStack obj = new MyStack();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.top();
+ * boolean param_4 = obj.empty();
+ */
+ 
+ 
+ 
+ 
+ 
+ 
+ //232.Implement Queue using Stacks
+ public class MyQueue {
+    Deque<Integer> Stack1;
+    Deque<Integer> Stack2;
+    
+    /** Initialize your data structure here. */
+    public MyQueue() {
+        Stack1 = new ArrayDeque<>();
+        Stack2 = new ArrayDeque<>();
+    }
+    
+    /** Push element x to the back of queue. */
+    public void push(int x) {
+        Stack1.addLast(x);
+    }
+    
+    /** Removes the element from in front of queue and returns that element. */
+    public int pop() {
+        if(!Stack2.isEmpty()){
+            return Stack2.pollLast();                     //要先将Stack2中的元素pop完再从原始Stack1中添加
+        }
+        else{
+            while(!Stack1.isEmpty()){
+                Stack2.addLast(Stack1.pollLast());
+        }
+            return Stack2.pollLast();
+        }
+        
+    }
+    
+    /** Get the front element. */
+    public int peek() {
+        if(!Stack2.isEmpty()){
+            return Stack2.peekLast();
+        }
+        else{
+            while(!Stack1.isEmpty()){
+                Stack2.addLast(Stack1.pollLast());
+        }
+            return Stack2.peekLast();
+        }
+    }
+    
+    /** Returns whether the queue is empty. */
+    public boolean empty() {
+        return Stack1.isEmpty() && Stack2.isEmpty();
+    }
+}
+
+/**
+ * Your MyQueue object will be instantiated and called as such:
+ * MyQueue obj = new MyQueue();
+ * obj.push(x);
+ * int param_2 = obj.pop();
+ * int param_3 = obj.peek();
+ * boolean param_4 = obj.empty();
+ */
